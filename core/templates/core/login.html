@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Log in | {% endblock %}
+
+{% load socialaccount %}
+
+{% block content %}
+<div class="p-10 lg:p-20 text-center">
+    <h1 class="text-3xl lg:text-6xl text-white">Log in</h1>
+</div>
+
+<form method="post" action="." class="lg:w-1/4 px-4 mx-auto">
+    {% csrf_token %}
+
+    <div class="mb-5">
+        <label class="text-white">Username</label>
+
+        <input type="text" name="username" class="w-full mt-2 px-4 py-2 rounded-xl">
+    </div>
+
+    <div class="mb-5">
+        <label class="text-white">Password</label>
+
+        <input type="password" name="password" class="w-full mt-2 px-4 py-2 rounded-xl">
+    </div>
+
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    <div class="mb-5 p-4 rounded-xl bg-red-300 text-white">
+        <p>{{ error|escape }}</p>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+
+    <div class="flex justify-center items-center">
+
+        <button class="px-5 py-3 rounded-3xl text-white bg-teal-800 hover:bg-teal-700 mr-8">Log in</button>
+
+        <a href="{% provider_login_url 'google'%}"
+            class="py-2 px-2 bg-emerald-200 rounded-3xl flex items-center justify-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/2504/2504739.png" alt="" width="24"> <span
+                class="font-bold">
+                &nbsp;Login With Google
+            </span>
+        </a>
+    </div>
+</form>
+{% endblock %}
